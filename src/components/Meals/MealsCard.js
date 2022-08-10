@@ -1,5 +1,5 @@
 import React from 'react';
-import MealItem from '../MealItem/MealItem';
+import MealItem from './MealItem';
 import DUMMY_MEALS from '../../dummy-meals';
 import Card from '../UI/Card/Card';
 

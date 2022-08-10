@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import HeaderCartButton from '../UI/HeaderCartButton/HeaderCartButton';
+import HeaderCartButton from './HeaderCartButton';
 import Modal from '../UI/Modal/Modal';
 
 import classes from './Header.module.css';
