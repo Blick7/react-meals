@@ -4,11 +4,33 @@ const CartContext = React.createContext({
   items: [],
   amount: 0,
   addItem: (item) => {},
+  removeItem: (id) => {},
 });
 
 const cartReducer = (state, action) => {
   if (action.type === 'Add_ITEM') {
-    return { items: state.items.concat(action.item), amount: state.amount++ };
+    const existingItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+    const existingItem = state.items[existingItemIndex];
+
+    const totalAmount = state.amount + action.item.price * action.item.amount;
+
+    let cartItems;
+
+    if (existingItem) {
+      const cartItem = {
+        ...existingItem,
+        amount: existingItem.amount + action.item.amount,
+      };
+
+      cartItems = [...state.items];
+      cartItems[existingItemIndex] = cartItem;
+    } else {
+      cartItems = state.items.concat(action.item);
+    }
+
+    return { items: cartItems, amount: totalAmount };
   }
 
   return {

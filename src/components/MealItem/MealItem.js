@@ -14,7 +14,6 @@ const MealItem = (props) => {
       price: props.price,
       amount: amount,
     });
-    console.log(ctx);
   };
 
   return (

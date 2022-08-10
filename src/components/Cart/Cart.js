@@ -3,22 +3,31 @@ import CartItem from './CartItem';
 import CartContext from '../store/cart-context';
 
 import classes from './Cart.module.css';
-const dummy = [
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-];
+// const dummy = [
+//   {
+//     id: 'm2',
+//     name: 'Schnitzel',
+//     description: 'A german specialty!',
+//     price: 16.5,
+//   },
+// ];
 
 const Cart = (props) => {
   const ctx = useContext(CartContext);
-  console.log(ctx);
+  const totalAmount = `$${ctx.amount.toFixed(2)}`;
+
+  const cartItemRemoveHandler = (id) => {
+    ctx.removeItem(id);
+  };
+
+  const cartAddItemHandler = (item) => {
+    ctx.addItem({ ...item, amount: 1 });
+  };
+
   return (
     <React.Fragment>
       <div className={classes['cart-items']}>
-        {dummy.map((item) => {
+        {ctx.items.map((item) => {
           return (
             <CartItem
               name={item.name}
@@ -26,13 +35,15 @@ const Cart = (props) => {
               amount={item.amount}
               price={item.price}
               key={item.id}
+              onRemove={cartItemRemoveHandler.bind(null, item.id)}
+              onAdd={cartAddItemHandler.bind(null, item)}
             />
           );
         })}
       </div>
       <div className={classes.total}>
         <span>Total Amount</span>
-        <span>33.00</span>
+        <span>{totalAmount}</span>
       </div>
       <div className={classes.actions}>
         <button className={classes['button--alt']} onClick={props.onClick}>

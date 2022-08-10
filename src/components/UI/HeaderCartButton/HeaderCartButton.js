@@ -9,9 +9,13 @@ const HeaderCartButton = (props) => {
   const [btnAnimation, setButtonAnimation] = useState(false);
   const buttonClasses = `${classes.button} ${btnAnimation ? classes.bump : ''}`;
 
+  const numberOfCartItems = ctx.items.reduce((curr, item) => {
+    return curr + item.amount;
+  }, 0);
+
   useEffect(() => {
     setButtonAnimation(true);
-    console.log(ctx.items);
+
     const timer = setTimeout(() => {
       setButtonAnimation(false);
     }, 500);
@@ -25,7 +29,7 @@ const HeaderCartButton = (props) => {
     <button className={buttonClasses} onClick={props.onClick}>
       <HiShoppingCart className={classes.cart} />
       <span>Your Cart</span>
-      <span className={classes['goods-amount']}>{ctx.amount}</span>
+      <span className={classes['goods-amount']}>{numberOfCartItems}</span>
     </button>
   );
 };
