@@ -24,7 +24,7 @@ const Header = () => {
         <HeaderCartButton onClick={showModalHandler} />
       </div>
       <div className={classes['main-image']}>
-        <img src={mealsImg}></img>
+        <img src={mealsImg} alt="meals"></img>
       </div>
       <Modal show={showModal} onClick={hideModalHandler} />
     </React.Fragment>
