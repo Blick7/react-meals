@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CartItem from './CartItem';
+import CartContext from '../store/cart-context';
 
 import classes from './Cart.module.css';
-
 const dummy = [
   {
     id: 'm2',
@@ -13,6 +13,8 @@ const dummy = [
 ];
 
 const Cart = (props) => {
+  const ctx = useContext(CartContext);
+  console.log(ctx);
   return (
     <React.Fragment>
       <div className={classes['cart-items']}>
