@@ -23,7 +23,8 @@ const Cart = (props) => {
   const cartAddItemHandler = (item) => {
     ctx.addItem({ ...item, amount: 1 }); // add just 1 item
   };
-
+  const orderIsActive = ctx.items.length > 0;
+  console.log(orderIsActive);
   return (
     <React.Fragment>
       <div className={classes['cart-items']}>
@@ -49,7 +50,7 @@ const Cart = (props) => {
         <button className={classes['button--alt']} onClick={props.onClick}>
           Close
         </button>
-        <button className={classes.button}>Order</button>
+        {orderIsActive && <button className={classes.button}>Order</button>}
       </div>
     </React.Fragment>
   );
