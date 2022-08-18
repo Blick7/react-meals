@@ -69,22 +69,22 @@ const CartForm = (props) => {
       <div className={nameClasses}>
         <label htmlFor="name">Name</label>
         <input type="text" id="name" ref={nameRef}></input>
-        {!formValidity.name && <p>Enter Name</p>}
+        {!formValidity.name && <p>Enter valid name</p>}
       </div>
       <div className={streetClasses}>
         <label htmlFor="street">Street</label>
         <input type="text" id="street" ref={streetRef}></input>
-        {!formValidity.street && <p>Enter Street</p>}
+        {!formValidity.street && <p>Enter valid street</p>}
       </div>
       <div className={emailClasses}>
         <label htmlFor="email">Email</label>
         <input type="email" id="email" ref={emailRef}></input>
-        {!formValidity.email && <p>Enter name</p>}
+        {!formValidity.email && <p>Enter valid email</p>}
       </div>
       <div className={phoneClasses}>
         <label htmlFor="phone">Phone</label>
         <input type="tel" id="phone" ref={phoneRef}></input>
-        {!formValidity.phone && <p>Enter name</p>}
+        {!formValidity.phone && <p>Enter valid phone number</p>}
       </div>
       <div className={classes.actions}>
         <button onClick={props.onClose}>Cancel</button>
