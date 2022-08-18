@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import CartItem from './CartItem';
 import CartContext from '../../store/cart-context';
 import CartForm from './CartForm';
@@ -26,6 +26,12 @@ const Cart = (props) => {
   };
   const orderIsActive = ctx.items.length > 0;
 
+  const [orderFormIsActive, setOrderFormIsActive] = useState(false);
+
+  const orderHandler = () => {
+    setOrderFormIsActive(true);
+  };
+
   return (
     <React.Fragment>
       <div className={classes['cart-items']}>
@@ -47,13 +53,19 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      <CartForm />
-      <div className={classes.actions}>
-        <button className={classes['button--alt']} onClick={props.onClick}>
-          Close
-        </button>
-        {orderIsActive && <button className={classes.button}>Order</button>}
-      </div>
+      {!orderFormIsActive && (
+        <div className={classes.actions}>
+          <button className={classes['button--alt']} onClick={props.onClick}>
+            Close
+          </button>
+          {orderIsActive && (
+            <button className={classes.button} onClick={orderHandler}>
+              Order
+            </button>
+          )}
+        </div>
+      )}
+      {orderFormIsActive && <CartForm onClose={props.onClick} />}
     </React.Fragment>
   );
 };

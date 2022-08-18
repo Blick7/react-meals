@@ -1,23 +1,87 @@
+import { useRef, useState } from 'react';
+
 import classes from './CartForm.module.css';
 
-const CartForm = () => {
+const isNotEmpty = (value) => value.trim() !== '';
+
+const CartForm = (props) => {
+  const [formValidity, setFormValidity] = useState({
+    name: true,
+    street: true,
+    email: true,
+    phone: true,
+  });
+
+  const nameRef = useRef();
+  const streetRef = useRef();
+  const emailRef = useRef();
+  const phoneRef = useRef();
+
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+
+    const nameIsValid = isNotEmpty(nameRef.current.value);
+    const streetIsValid = isNotEmpty(streetRef.current.value);
+    const emailIsValid = isNotEmpty(emailRef.current.value);
+    const phoneIsValid = isNotEmpty(phoneRef.current.value);
+
+    setFormValidity({
+      name: nameIsValid,
+      street: streetIsValid,
+      email: emailIsValid,
+      phone: phoneIsValid,
+    });
+
+    const formIsValid =
+      nameIsValid && streetIsValid && emailIsValid && phoneIsValid;
+
+    if (!formIsValid) {
+      console.log('FORM IS NOT VALID');
+      return;
+    }
+  };
+
+  const nameClasses = `${classes['form-item']} ${
+    !formValidity.name && classes.invalid
+  }`;
+
+  const streetClasses = `${classes['form-item']} ${
+    !formValidity.street && classes.invalid
+  }`;
+
+  const emailClasses = `${classes['form-item']} ${
+    !formValidity.email && classes.invalid
+  }`;
+
+  const phoneClasses = `${classes['form-item']} ${
+    !formValidity.phone && classes.invalid
+  }`;
+
   return (
-    <form className={classes.form}>
-      <div className={classes['form-item']}>
+    <form className={classes.form} onSubmit={formSubmitHandler}>
+      <div className={nameClasses}>
         <label htmlFor="name">Name</label>
-        <input type="text" id="name"></input>
+        <input type="text" id="name" ref={nameRef}></input>
+        {!formValidity.name && <p>Enter Name</p>}
       </div>
-      <div className={classes['form-item']}>
+      <div className={streetClasses}>
         <label htmlFor="street">Street</label>
-        <input type="text" id="street"></input>
+        <input type="text" id="street" ref={streetRef}></input>
+        {!formValidity.street && <p>Enter Street</p>}
       </div>
-      <div className={classes['form-item']}>
+      <div className={emailClasses}>
         <label htmlFor="email">Email</label>
-        <input type="email" id="email"></input>
+        <input type="email" id="email" ref={emailRef}></input>
+        {!formValidity.email && <p>Enter name</p>}
       </div>
-      <div className={classes['form-item']}>
+      <div className={phoneClasses}>
         <label htmlFor="phone">Phone</label>
-        <input type="phone" id="phone"></input>
+        <input type="tel" id="phone" ref={phoneRef}></input>
+        {!formValidity.phone && <p>Enter name</p>}
+      </div>
+      <div className={classes.actions}>
+        <button onClick={props.onClose}>Cancel</button>
+        <button className={classes.submit}>Submit</button>
       </div>
     </form>
   );
