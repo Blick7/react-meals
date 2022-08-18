@@ -1,0 +1,23 @@
+.form {
+  margin: 1rem 0;
+  /* height: 19rem; */
+  overflow: auto;
+}
+
+.form-item {
+  margin-bottom: 0.5rem;
+}
+
+.form-item label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.form-item input {
+  font: inherit;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 20rem;
+  max-width: 100%;
+}

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import CartItem from './CartItem';
 import CartContext from '../../store/cart-context';
+import CartForm from './CartForm';
 
 import classes from './Cart.module.css';
 // const dummy = [
@@ -24,7 +25,7 @@ const Cart = (props) => {
     ctx.addItem({ ...item, amount: 1 }); // add just 1 item
   };
   const orderIsActive = ctx.items.length > 0;
-  console.log(orderIsActive);
+
   return (
     <React.Fragment>
       <div className={classes['cart-items']}>
@@ -46,6 +47,7 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
+      <CartForm />
       <div className={classes.actions}>
         <button className={classes['button--alt']} onClick={props.onClick}>
           Close
