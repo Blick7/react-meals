@@ -39,6 +39,13 @@ const CartForm = (props) => {
       console.log('FORM IS NOT VALID');
       return;
     }
+
+    props.onConfirmOrder({
+      name: nameRef.current.value,
+      street: streetRef.current.value,
+      email: emailRef.current.value,
+      phone: phoneRef.current.value,
+    });
   };
 
   const nameClasses = `${classes['form-item']} ${

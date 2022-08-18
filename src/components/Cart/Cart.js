@@ -16,6 +16,8 @@ import classes from './Cart.module.css';
 const Cart = (props) => {
   const ctx = useContext(CartContext);
   const totalAmount = `$${ctx.amount.toFixed(2)}`;
+  const [orderFormIsActive, setOrderFormIsActive] = useState(false);
+  const [orderSubmitted, setOrderSubmitted] = useState(false);
 
   const cartItemRemoveHandler = (id) => {
     ctx.removeItem(id);
@@ -26,13 +28,33 @@ const Cart = (props) => {
   };
   const orderIsActive = ctx.items.length > 0;
 
-  const [orderFormIsActive, setOrderFormIsActive] = useState(false);
-
   const orderHandler = () => {
     setOrderFormIsActive(true);
   };
 
-  return (
+  const confirmOrderHandler = async (order) => {
+    const response = await fetch(
+      'https://react-http-67f2d-default-rtdb.firebaseio.com/orders.json',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          order,
+          orderedItems: ctx.items,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('ERROR: ' + response.message);
+    }
+    setOrderSubmitted(true);
+    ctx.clearCart();
+  };
+
+  const modalContent = (
     <React.Fragment>
       <div className={classes['cart-items']}>
         {ctx.items.map((item) => {
@@ -65,7 +87,29 @@ const Cart = (props) => {
           )}
         </div>
       )}
-      {orderFormIsActive && <CartForm onClose={props.onClick} />}
+      {orderFormIsActive && (
+        <CartForm
+          onClose={props.onClick}
+          onConfirmOrder={confirmOrderHandler}
+        />
+      )}
+    </React.Fragment>
+  );
+
+  const orderSubmittetContent = (
+    <React.Fragment>
+      <p>Your order is submitted</p>
+      <div className={classes.actions}>
+        <button className={classes['button--alt']} onClick={props.onClick}>
+          Close
+        </button>
+      </div>
+    </React.Fragment>
+  );
+
+  return (
+    <React.Fragment>
+      {!orderSubmitted ? modalContent : orderSubmittetContent}
     </React.Fragment>
   );
 };
